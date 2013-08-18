@@ -383,7 +383,7 @@ respond({Code, ResponseHeaders, chunked}) ->
                          %% The RFC is ambiguous so emulating Google is smart.
                          mochiweb_headers:enter("Content-Length", "0",
                                                 HResponse);
-                     _ when Version >= {1, 1} ->
+                     _ when (Version >= {1, 1}) orelse (Version == 'HTTP/1.1') ->
                          %% Only use chunked encoding for HTTP/1.1
                          mochiweb_headers:enter("Transfer-Encoding", "chunked",
                                                 HResponse);
