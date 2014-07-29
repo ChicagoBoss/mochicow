@@ -397,12 +397,13 @@ respond({Code, ResponseHeaders, chunked}) ->
                  end,
     start_response({Code, HResponse1});
 respond({Code, ResponseHeaders, Body}) ->
-    Response = start_response_length({Code, ResponseHeaders, iolist_size(Body)}),
+    Bin = unicode:characters_to_binary(Body),
+    Response = start_response_length({Code, ResponseHeaders, iolist_size(Bin)}),
     case Method of
         'HEAD' ->
             ok;
         _ ->
-            send(Body)
+            send(Bin)
     end,
     Response.
 
